@@ -221,11 +221,4 @@ public class Manifest {
         this.navDate = navDate;
     }
 
-    public Map<String, Object> getOtherContent() {
-        return otherContent;
-    }
-
-    public void setOtherContent(Map<String, Object> otherContent) {
-        this.otherContent = otherContent;
-    }
 }
