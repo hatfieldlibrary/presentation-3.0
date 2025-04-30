@@ -2,10 +2,15 @@ package iiif.presentation.v3.language;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class LanguageMap extends java.util.HashMap<String, List<String>> {
+public class LanguageMap extends HashMap<String, List<String>> {
+
+    public LanguageMap() {
+        super(); // Calls the HashMap's default constructor
+    }
+
     // Inherits the functionality of a Map where the key is a String (language code)
     // and the value is a List of Strings (text for that language).
 
