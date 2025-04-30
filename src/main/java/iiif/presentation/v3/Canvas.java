@@ -2,6 +2,7 @@ package iiif.presentation.v3;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import iiif.presentation.v3.language.LanguageMap;
 import iiif.presentation.v3.resource.ContentResource;
 
 import java.util.List;
@@ -16,8 +17,7 @@ import java.util.Map;
         "duration",
         "items",
         "thumbnail",
-        "content",
-        "otherContent"
+        "content"
 })
 public class Canvas {
 
@@ -28,16 +28,16 @@ public class Canvas {
     private String type = "Canvas";
 
     @JsonProperty("label")
-    private String label;
+    private LanguageMap label;
 
     @JsonProperty("height")
-    private int height;
+    private Integer height;
 
     @JsonProperty("width")
-    private int width;
+    private Integer width;
 
     @JsonProperty("duration")
-    private String duration;
+    private Float duration; // Duration is often a floating-point number
 
     @JsonProperty("items")
     private List<AnnotationPage> items;
@@ -48,9 +48,7 @@ public class Canvas {
     @JsonProperty("content")
     private List<ContentResource> content;
 
-    @JsonProperty("otherContent")
-    private Map<String, Object> otherContent;
-
+    // Extension properties...
     public Canvas() {
     }
 
@@ -62,11 +60,11 @@ public class Canvas {
         this.id = id;
     }
 
-    public String getLabel() {
+    public LanguageMap getLabel() {
         return label;
     }
 
-    public void setLabel(String label) {
+    public void setLabel(LanguageMap label) {
         this.label = label;
     }
 
@@ -86,11 +84,11 @@ public class Canvas {
         this.width = width;
     }
 
-    public String getDuration() {
+    public float getDuration() {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(float duration) {
         this.duration = duration;
     }
 
@@ -118,11 +116,4 @@ public class Canvas {
         this.content = content;
     }
 
-    public Map<String, Object> getOtherContent() {
-        return otherContent;
-    }
-
-    public void setOtherContent(Map<String, Object> otherContent) {
-        this.otherContent = otherContent;
-    }
 }
