@@ -1,9 +1,9 @@
-package iiif.resource;
+package iiif.presentation.v3.resource;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import iiif.Service;
+import iiif.presentation.v3.Service;
 
 import java.net.URI;
 import java.util.List;

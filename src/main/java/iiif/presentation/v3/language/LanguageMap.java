@@ -1,4 +1,4 @@
-package iiif.language;
+package iiif.presentation.v3.language;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

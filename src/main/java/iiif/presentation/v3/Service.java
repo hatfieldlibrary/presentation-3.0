@@ -1,9 +1,9 @@
-package iiif;
+package iiif.presentation.v3;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import iiif.language.LanguageMap;
+import iiif.presentation.v3.language.LanguageMap;
 
 import java.util.List;
 

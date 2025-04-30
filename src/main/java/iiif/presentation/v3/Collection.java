@@ -1,4 +1,4 @@
-package iiif;
+package iiif.presentation.v3;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

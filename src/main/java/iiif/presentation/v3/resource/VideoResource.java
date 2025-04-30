@@ -1,4 +1,4 @@
-package iiif.resource;
+package iiif.presentation.v3.resource;
 
 public class VideoResource extends ContentResource{
 

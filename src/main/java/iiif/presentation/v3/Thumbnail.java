@@ -1,4 +1,4 @@
-package iiif;
+package iiif.presentation.v3;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
