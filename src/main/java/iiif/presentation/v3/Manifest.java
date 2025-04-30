@@ -2,6 +2,7 @@ package iiif.presentation.v3;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import iiif.presentation.v3.language.LanguageMap;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ import java.util.Map;
         "items",
         "thumbnail",
         "navDate",
-        "otherContent"
+        "supplementary"
 })
 public class Manifest {
 
@@ -38,13 +39,13 @@ public class Manifest {
     private String type = "Manifest";
 
     @JsonProperty("label")
-    private String label;
+    private LanguageMap label;
 
     @JsonProperty("metadata")
     private List<Metadata> metadata;
 
     @JsonProperty("summary")
-    private String summary;
+    private LanguageMap summary;
 
     @JsonProperty("requiredStatement")
     private RequiredStatement requiredStatement;
@@ -79,8 +80,12 @@ public class Manifest {
     @JsonProperty("navDate")
     private String navDate;
 
-    @JsonProperty("otherContent")
-    private Map<String, Object> otherContent;
+    @JsonProperty("supplementary")
+    private List<Collection> supplementary; // For related collections
+
+    // Extension properties can be added as needed with @JsonProperty("...")
+    private Map<String, Object> otherProperties;
+
 
     public Manifest() {
     }
@@ -109,11 +114,11 @@ public class Manifest {
         this.type = type;
     }
 
-    public String getLabel() {
+    public LanguageMap getLabel() {
         return label;
     }
 
-    public void setLabel(String label) {
+    public void setLabel(LanguageMap label) {
         this.label = label;
     }
 
@@ -125,11 +130,11 @@ public class Manifest {
         this.metadata = metadata;
     }
 
-    public String getSummary() {
+    public LanguageMap getSummary() {
         return summary;
     }
 
-    public void setSummary(String summary) {
+    public void setSummary(LanguageMap summary) {
         this.summary = summary;
     }
 

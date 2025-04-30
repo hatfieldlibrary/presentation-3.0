@@ -2,9 +2,9 @@ package iiif.presentation.v3;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import iiif.presentation.v3.language.LanguageMap;
 
 import java.util.List;
-import java.util.Map;
 
 @JsonPropertyOrder({
         "@context",
@@ -23,7 +23,8 @@ import java.util.Map;
         "collections",
         "manifests",
         "thumbnail",
-        "otherContent"
+        "items", // For ordered items in a Collection
+        "supplementary"
 })
 public class Collection {
 
@@ -37,13 +38,13 @@ public class Collection {
     private String type = "Collection";
 
     @JsonProperty("label")
-    private String label;
+    private LanguageMap label;
 
     @JsonProperty("metadata")
     private List<Metadata> metadata;
 
     @JsonProperty("summary")
-    private String summary;
+    private LanguageMap summary;
 
     @JsonProperty("requiredStatement")
     private RequiredStatement requiredStatement;
@@ -75,19 +76,17 @@ public class Collection {
     @JsonProperty("thumbnail")
     private List<Thumbnail> thumbnail;
 
-    @JsonProperty("otherContent")
-    private Map<String, Object> otherContent;
+    @JsonProperty("items")
+    private List<Item> items; // Use a generic Item to hold Manifests or Collections
+
+    @JsonProperty("supplementary")
+    private List<Collection> supplementary; // For related collections
+
+    // Extension properties...
+
 
     public Collection() {
     }
-
-    public String getContext() {
-        return context;
-    }
-
-//    public void setContext(String context) {
-//        this.context = context;
-//    }
 
     public String getId() {
         return id;
@@ -101,11 +100,11 @@ public class Collection {
         return type;
     }
 
-    public String getLabel() {
+    public LanguageMap getLabel() {
         return label;
     }
 
-    public void setLabel(String label) {
+    public void setLabel(LanguageMap label) {
         this.label = label;
     }
 
@@ -117,11 +116,11 @@ public class Collection {
         this.metadata = metadata;
     }
 
-    public String getSummary() {
+    public LanguageMap getSummary() {
         return summary;
     }
 
-    public void setSummary(String summary) {
+    public void setSummary(LanguageMap summary) {
         this.summary = summary;
     }
 
@@ -205,11 +204,4 @@ public class Collection {
         this.thumbnail = thumbnail;
     }
 
-    public Map<String, Object> getOtherContent() {
-        return otherContent;
-    }
-
-    public void setOtherContent(Map<String, Object> otherContent) {
-        this.otherContent = otherContent;
-    }
 }
