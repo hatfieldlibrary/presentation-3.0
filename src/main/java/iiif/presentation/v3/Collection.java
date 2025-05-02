@@ -3,7 +3,9 @@ package iiif.presentation.v3;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import iiif.presentation.v3.language.LanguageMap;
+import iiif.presentation.v3.validation.IIIFVocabulary;
 
+import java.util.Arrays;
 import java.util.List;
 
 @JsonPropertyOrder({
@@ -11,6 +13,7 @@ import java.util.List;
         "id",
         "type",
         "label",
+        "behavior",
         "metadata",
         "summary",
         "requiredStatement",
@@ -39,6 +42,17 @@ public class Collection {
 
     @JsonProperty("label")
     private LanguageMap label;
+
+    public List<String> getBehavior() {
+        return behavior;
+    }
+
+    public void setBehavior(List<String> behavior) {
+        this.behavior = behavior;
+    }
+
+    @JsonProperty("behavior")
+    private List<String> behavior;
 
     @JsonProperty("metadata")
     private List<Metadata> metadata;
@@ -202,6 +216,32 @@ public class Collection {
 
     public void setThumbnail(List<Thumbnail> thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public boolean isValid() {
+        // Check for required properties
+        if (id == null || type == null || items == null) {
+            return false;
+        }
+        // Validate type
+        if (!type.equals("Collection")) {
+            return false;
+        }
+        // Validate label (LanguageMap)
+        if (label == null || label.isEmpty()) {
+            return false;
+        }
+        // Validate items -  Check that items are valid
+        if (items != null) {
+            for (Object item : items) {
+                if (!(item instanceof Canvas || item instanceof Range)) {
+                    return false;
+                }
+            }
+        }
+        // Validate behavior.
+        return behavior == null || IIIFVocabulary.isValidBehaviorCombination(type, behavior);
+        // If all checks pass, the Range is considered valid
     }
 
 }

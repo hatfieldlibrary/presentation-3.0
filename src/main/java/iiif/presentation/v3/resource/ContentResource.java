@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import iiif.presentation.v3.Service;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -56,8 +57,6 @@ public abstract class ContentResource {
     private String profile;
     @JsonProperty("processing") // Example of an extension property
     private String processing;
-    @JsonProperty("otherContent") // Another example
-    private Map<String, Object> otherContent;
 
     // what is this? Gemini seems to have invented it...
     private Map<String, Object> otherProperties;
@@ -167,13 +166,6 @@ public abstract class ContentResource {
         this.processing = processing;
     }
 
-    public Map<String, Object> getOtherContent() {
-        return otherContent;
-    }
-
-    public void setOtherContent(Map<String, Object> otherContent) {
-        this.otherContent = otherContent;
-    }
 
     @JsonProperty("otherProperties") // Serialize the map under "otherProperties"
     public Map<String, Object> getOtherProperties() {
@@ -184,4 +176,37 @@ public abstract class ContentResource {
     public void setOtherProperties(Map<String, Object> otherProperties) {
         this.otherProperties = otherProperties;
     }
+
+    public boolean isValid() {
+
+        // Basic required properties check
+        if (id == null || type == null ) {
+            return false;
+        }
+
+        // Validate 'type'
+        List<String> validTypes = Arrays.asList("text", "image", "audio", "video");
+        if (!validTypes.contains(type)) {
+            return false;
+        }
+
+
+        // Validate 'behavior' values
+        if (behavior != null) {
+            List<String> validBehaviors = Arrays.asList("auto-advance", "continuous", "individuals", "paged", "repeat", "unordered");
+            for (String be : behavior) {
+                if (!validBehaviors.contains(be)) {
+                    return false;
+                }
+            }
+        }
+
+        // 4. Add more complex validation rules as needed
+        //    - Check for mutual exclusivity of properties
+        //    - Validate the structure and content of nested objects (e.g., metadata)
+        //    - Ensure required sub-properties are present
+
+        return true;
+    }
+
 }

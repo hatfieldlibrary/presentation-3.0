@@ -3,7 +3,9 @@ package iiif.presentation.v3;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import iiif.presentation.v3.language.LanguageMap;
+import iiif.presentation.v3.validation.IIIFVocabulary;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +14,7 @@ import java.util.Map;
         "id",
         "type",
         "label",
+        "behavior",
         "metadata",
         "summary",
         "requiredStatement",
@@ -40,6 +43,9 @@ public class Manifest {
 
     @JsonProperty("label")
     private LanguageMap label;
+
+    @JsonProperty("behavior")
+    private List<String> behavior;
 
     @JsonProperty("metadata")
     private List<Metadata> metadata;
@@ -110,16 +116,20 @@ public class Manifest {
         return type;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
-
     public LanguageMap getLabel() {
         return label;
     }
 
     public void setLabel(LanguageMap label) {
         this.label = label;
+    }
+
+    public List<String> getBehavior() {
+        return behavior;
+    }
+
+    public void setBehavior(List<String> behavior) {
+        this.behavior = behavior;
     }
 
     public List<Metadata> getMetadata() {
@@ -224,6 +234,34 @@ public class Manifest {
 
     public void setNavDate(String navDate) {
         this.navDate = navDate;
+    }
+
+
+    public boolean isValid() {
+        // Check for required properties
+        if (id == null || type == null || items == null) {
+            return false;
+        }
+        // Validate type
+        if (!type.equals("Manifest")) {
+            return false;
+        }
+        // Validate label (LanguageMap)
+        if (label == null || label.isEmpty()) {
+            return false;
+        }
+
+        // Validate items -  Check that items are valid
+        if (items != null) {
+            for (Object item : items) {
+                if (!(item instanceof Canvas || item instanceof Range)) {
+                    return false;
+                }
+            }
+        }
+        // Validate behavior.
+        return behavior == null || IIIFVocabulary.isValidBehaviorCombination(type, behavior);
+        // If all checks pass, the Range is considered valid
     }
 
 }

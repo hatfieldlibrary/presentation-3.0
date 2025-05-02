@@ -4,14 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import iiif.presentation.v3.language.LanguageMap;
 import iiif.presentation.v3.resource.ContentResource;
+import iiif.presentation.v3.validation.IIIFVocabulary;
 
 import java.util.List;
-import java.util.Map;
 
 @JsonPropertyOrder({
         "id",
         "type",
         "label",
+        "behavior",
         "height",
         "width",
         "duration",
@@ -29,6 +30,9 @@ public class Canvas {
 
     @JsonProperty("label")
     private LanguageMap label;
+
+    @JsonProperty("behavior")
+    private List<String> behavior;
 
     @JsonProperty("height")
     private Integer height;
@@ -62,6 +66,14 @@ public class Canvas {
 
     public LanguageMap getLabel() {
         return label;
+    }
+
+    public void setBehavior(List<String> behavior) {
+        this.behavior = behavior;
+    }
+
+    public List<String> getBehavior() {
+        return behavior;
     }
 
     public void setLabel(LanguageMap label) {
@@ -114,6 +126,20 @@ public class Canvas {
 
     public void setContent(List<ContentResource> content) {
         this.content = content;
+    }
+
+    public boolean isValid() {
+        // Check for required properties
+        if (id == null || type == null) {
+            return false;
+        }
+        // Validate type
+        if (!type.equals("Canvas")) {
+            return false;
+        }
+        // Validate behavior.
+        return behavior == null || IIIFVocabulary.isValidBehaviorCombination(type, behavior);
+        // If all checks pass, the Canvas is considered valid
     }
 
 }
